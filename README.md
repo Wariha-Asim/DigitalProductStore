@@ -2,12 +2,12 @@
 DigitalProductStore is a powerful Django-based e-commerce platform designed to deliver a comprehensive online shopping experience. It combines robust product management features with secure user authentication and an intuitive admin panel, making it an ideal choice for deploying scalable online stores.
 
 # Features
-Product Management: Seamlessly view, add, update, and delete products.
-User Authentication: Secure user registration, login, and password reset functionalities.
-Admin Panel: Comprehensive tools for managing products, user accounts, and orders.
-Shopping Cart: Users can easily add products to their cart and proceed to checkout.
-Order Processing: Efficient handling of user orders and transactions.
-Key Technologies
+# Product Management: Seamlessly view, add, update, and delete products.
+# User Authentication: Secure user registration, login, and password reset functionalities if you forget password through smtp
+# Admin Panel: Comprehensive tools for managing products, user accounts, and orders.
+# Shopping Cart: Users can easily add products to their cart and proceed to checkout.
+# Order Processing: Efficient handling of user orders and transactions.
+# Key Technologies
 Django: The web framework used to build the project.
 MySQL: The database system for storing product and user data.
 SMTP: Email configuration for user notifications and password management.
