@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Product</title>
+    <style>
+       .background{position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{% static "bg store.avif" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(8px); /* Blur background */
+            z-index: -1; /* Place behind the content */
+       }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        form {
+            background:gainsboro; /* Semi-transparent white background for form */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            max-width: 100%;
+            z-index: 1; /* Ensure form is above background */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333; /* Darker color for labels */
+        }
+        input[type="text"], 
+        input[type="number"], 
+        select, 
+        input[type="file"], 
+        textarea {
+            width: calc(100% - 22px); /* Adjust width to match padding */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3; /* Primary color */
+            border: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #1976D2; /* Darker shade on hover */
+        }
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF5722; /* Logout button color */
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1; /* Ensure logout button is above background */
+        }
+        .logout-button:hover {
+            background-color: #E64A19; /* Darker shade on hover */
+        }
+        .message {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    
+    <form action="{% url 'createprod' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if existmsg %}
+            <p class="message">{{ existmsg }}</p>
+        {% endif %}
+        {% if typemsg %}
+            <p class="message">{{ typemsg }}</p>
+        {% endif %}
+        <h1>Add Product</h1>
+    
+        {% if request.session.name %}
+            <p style="text-align: center; color: #333;">Welcome, {{ request.session.name }}!</p>
+        {% endif %}
+        <label for="title">Product Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter Product Title" required />
+        
+        <label for="brand">Brand:</label>
+        <input type="text" id="brand" name="brand" placeholder="Enter Brand" required />
+        
+        <label for="price">Price (in Rs):</label>
+        <input type="number" id="price" name="price" placeholder="Enter Price in Rs" required />
+        
+        <label for="qty">Quantity:</label>
+        <input type="number" id="qty" name="qty" placeholder="Enter Quantity" required />
+        
+        <label for="desc">Description:</label>
+        <textarea id="desc" name="desc" placeholder="Enter Description" rows="4" required></textarea>
+        
+        <label for="file">Image:</label>
+        <input type="file" id="file" name="file" required />
+        
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            {% for i in category1 %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit">Add Product</button>
+    </form>
+</body>
+</html>

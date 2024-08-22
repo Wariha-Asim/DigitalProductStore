@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <style>
+         body{
+        background-color: #333;
+      }
+        .welcome {
+            font-weight: bold;
+            font-style: italic;
+            font-size: 20px;
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{% static "bg store.avif" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(8px);
+            z-index: -1;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            font-family: Arial, sans-serif;
+            background-color: #6E6E6DFF;
+        }
+        .product-container {
+            background: peachpuff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+        .product-container img {
+            max-width: 40%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid #333;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .product-container h1 {
+            text-align: center;
+            color: #333;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .dashboard-heading {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .product-container h2 {
+            margin: 0;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .product-container p {
+            margin: 10px 0;
+        }
+        .product-container .price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF5722;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .logout-button:hover {
+            background-color: #E64A19;
+        }
+        .back-button {
+            margin-top: 20px;
+            background-color: #FF5722;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        .back-button:hover {
+            background-color: #E64A19;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+
+    <div class="product-container">
+        <h1 class="dashboard-heading">Dashboard</h1>
+        {% if request.session.name %}
+            <p class="welcome">Welcome, {{ request.session.name }}!</p>
+        {% endif %}
+        <h2>{{ product.name|capfirst }}</h2>
+        <div class="productdetails">
+            {% if error_message %}
+                <h2>{{ error_message }}</h2>
+            {% else %}
+                <img src="{{ product.img_url }}" alt="Product Image">
+                <p><strong>Brand:</strong> {{ product.brand }}</p>
+                <p><strong>Price:</strong> <span class="price">Rs. {{ product.price }}</span></p>
+                <p><strong>Quantity:</strong> {{ product.qty }}</p>
+                <p><strong>Description:</strong> {{ product.description }}</p>
+                <p><strong>Category:</strong> {{ product.category.name }}</p>
+                <p><strong>Created By:</strong> {{ product.user.name }}</p>
+                <p><strong>Created On:</strong> {{ product.created_at }}</p>
+                <p><strong>Updated On:</strong> {{ product.updated_at }}</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

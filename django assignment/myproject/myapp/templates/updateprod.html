@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+    <style>
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{% static "bg store.avif" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(8px);
+            z-index: -1;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            font-family: Arial, sans-serif;
+            background-color: #6E6E6DFF;
+        }
+        form {
+            background: gainsboro;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            max-width: 100%;
+            z-index: 1;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="file"] {
+            margin-bottom: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF5722;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .logout-button:hover {
+            background-color: #E64A19;
+        }
+        .message {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .welcome {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+
+    <form action="{% url 'updateprod' product1.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ product1.id }}">
+
+        {% if request.session.name %}
+            <p class="welcome">Welcome, {{ request.session.name }}!</p>
+        {% endif %}
+        <h1>Update Product</h1>
+        <label for="title">Product Title:</label>
+        <input type="text" id="title" name="title" value="{{ product1.name }}" required>
+
+        <label for="brand">Brand:</label>
+        <input type="text" id="brand" name="brand" value="{{ product1.brand }}" required>
+
+        <label for="price">Price (in Rs):</label>
+        <input type="number" id="price" name="price" value="{{ product1.price }}" required>
+
+        <label for="qty">Quantity:</label>
+        <input type="number" id="qty" name="qty" value="{{ product1.qty }}" required>
+
+        <label for="desc">Description:</label>
+        <textarea id="desc" name="desc" required>{{ product1.description }}</textarea>
+
+        <label for="img_url">Image:</label>
+        {% if product1.img_url %}
+            <img src="{{ product1.img_url }}" alt="Current Image" style="max-width: 100px; margin-bottom: 16px;">
+        {% else %}
+            <p>No image available.</p>
+        {% endif %}
+        <input type="file" id="img_url" name="img_url">
+
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            {% for i in category1 %}
+                <option value="{{ i.id }}" {% if i.id == product1.category.id %}selected{% endif %}>{{ i.name }}</option>
+            {% endfor %}
+        </select>
+            {% if typemsg %}
+                <div class="message">{{ typemsg }}</div>
+            {% endif %}
+
+            <button type="submit">Update Product</button>
+        </form>
+</body>
+
+</html>

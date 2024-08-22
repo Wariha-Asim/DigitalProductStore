@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+      body {
+        position: relative;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      /* Blurred background image */
+      .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('{% static "bg store.avif" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(8px); /* Blur background */
+        z-index: -1; /* Place behind the form */
+      }
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .signup-box {
+        background-color:pink; /* Light beige with some transparency */
+        border: 2px solid #333;
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        position: relative;
+        z-index: 1; /* Ensure form is above the background */
+      }
+
+      .brand {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        z-index: 2; /* Ensure brand is above the background */
+      }
+
+      .brand img {
+        vertical-align: middle;
+        width: 90px; /* Adjust icon size */
+        height: auto;
+        margin-right: 10px;
+        
+      }
+      .signup-box h2 {
+        margin-top: 50px; /* Adjust margin to fit brand name */
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-group input {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+        outline: none;
+        font-size: 16px;
+      }
+
+      .signup-button {
+        background-color:black;
+        border: 1px solid #007bff;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%;
+        transition: background-color 0.3s, border-color 0.3s;
+        border-radius: 4px;
+      }
+
+      .signup-button:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+
+      .error-message {
+        color: red;
+        margin-bottom: 10px;
+      }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="brand">
+            <img src="{% static 'icon.png' %}" alt="Icon"> 
+            WA STORE 
+        </div>
+        <div class="signup-box">
+            <h2>Sign Up</h2>
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                {% if signup_message %}
+                    <p class="error-message">{{ signup_message }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="{{ name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ email }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <button type="submit" class="signup-button">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

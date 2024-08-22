@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      body {
+        position: relative;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('{% static "bg store.avif" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(8px); 
+        z-index: -1; 
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .login-box {
+        background-color:pink; 
+        border: 2px solid #333;
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        position: relative;
+        z-index: 1; 
+      }
+
+      .brand {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        z-index: 2; 
+      }
+
+      .brand img {
+        vertical-align: middle;
+        width: 90px; 
+        height: auto;
+        margin-right: 10px;
+      }
+
+      .login-box h2 {
+        margin-top: 50px; 
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-group input {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+        outline: none;
+        font-size: 16px;
+      }
+
+      .login-button {
+        background-color: #333;
+        border: 1px solid #333;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%;
+        transition: background-color 0.3s, border-color 0.3s;
+        border-radius: 4px;
+      }
+
+      .login-button:hover {
+        background-color: #1a1a1a;
+        border-color: #1a1a1a;
+      }
+
+      .forgot-password {
+        display: block;
+        text-align: left;
+        margin-top: -10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .forgot-password:hover {
+        text-decoration: underline;
+      }
+
+      .error-message {
+        color: red;
+        margin-bottom: 10px;
+      }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="brand">
+            <img src="{% static 'icon.png' %}" alt="Icon">
+            WA STORE
+        </div>
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                {% if login_message %}
+                    <p class="error-message">{{ login_message }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <a href="{% url 'password_reset_email' %}" class="forgot-password">Forgot Password</a>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
